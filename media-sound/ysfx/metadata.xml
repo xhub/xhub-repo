@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="project">
+    <email>oli.huber@gmail.com</email>
+    <name>Olivier Huber</name>
+  </maintainer>
+  <longdescription lang="en">
+    This package provides support for audio and MIDI effects developed with the JSFX language.
+    These effects exist in source code form, and they are compiled and ran natively by hosting software.
+  </longdescription>
+  <use>
+    <flag name="lto">Enable LTO build</flag>
+  </use>
+</pkgmetadata>
