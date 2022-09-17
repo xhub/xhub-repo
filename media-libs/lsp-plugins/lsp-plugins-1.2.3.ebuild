@@ -55,11 +55,6 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	# From archlinux, see https://github.com/sadko4u/lsp-plugins/issues/257
-	"${FILESDIR}"/${PN}-1.2.2-default_make_flags.patch
-)
-
 src_configure() {
 	use doc && MODULES+="doc"
 	use jack && MODULES+=" jack"
