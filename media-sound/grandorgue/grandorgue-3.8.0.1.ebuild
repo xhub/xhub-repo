@@ -8,7 +8,7 @@ inherit cmake xdg
 DESCRIPTION="GrandOrgue is a sample based pipe organ simulator"
 HOMEPAGE="https://github.com/GrandOrgue/grandorgue"
 PV_=${PV%.*}-${PV##*.}
-SRC_URI="https://github.com/GrandOrgue/grandorgue/archive/refs/tags/${PV_}.tar.gz"
+SRC_URI="https://github.com/GrandOrgue/grandorgue/archive/refs/tags/${PV_}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}/${PN}-${PV_}"
 
 LICENSE="GPL-2+"
@@ -28,11 +28,13 @@ DEPEND="
 	x11-libs/wxGTK
 	"
 RDEPEND="${DEPEND}"
-BDEPEND=""
-
-PATCHES=(
-	"${FILESDIR}/${PN}-3.7.0.1-fix-hardcoded-libdir.patch"
-)
+BDEPEND="
+	app-arch/zip
+	app-text/po4a
+	dev-libs/libxslt
+	media-gfx/imagemagick
+	sys-devel/gettext
+	"
 
 src_configure() {
 	local mycmakeargs=(
@@ -40,6 +42,7 @@ src_configure() {
 		-DUSE_INTERNAL_PORTAUDIO=0
 		-DUSE_INTERNAL_ZITACONVOLVER=0
 		-DINSTALL_DEMO=$(usex demo 1 0)
+		-DUSE_BUILD_SYSTEM_LIBDIR=1
 	)
 	cmake_src_configure
 }
