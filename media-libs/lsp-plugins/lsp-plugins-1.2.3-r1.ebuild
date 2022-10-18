@@ -55,6 +55,8 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=( "${FILESDIR}/${PN}-fix-double-buffering.patch" )
+
 src_configure() {
 	use doc && MODULES+="doc"
 	use jack && MODULES+=" jack"

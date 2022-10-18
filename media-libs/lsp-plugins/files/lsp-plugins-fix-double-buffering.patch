@@ -7,8 +7,6 @@ Subject: [PATCH] Returned back double buffering for the window
  src/main/widgets/containers/Window.cpp | 9 +++++++--
  1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/modules/lsp-tk-lib/src/main/widgets/containers/Window.cpp b/modules/lsp-tk-lib/src/main/widgets/containers/Window.cpp
-index 3dd1fe3..3d15a5c 100644
 --- a/modules/lsp-tk-lib/src/main/widgets/containers/Window.cpp
 +++ b/modules/lsp-tk-lib/src/main/widgets/containers/Window.cpp
 @@ -300,15 +300,20 @@ namespace lsp
