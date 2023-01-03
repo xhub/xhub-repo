@@ -12,5 +12,6 @@
     <bugs-to>https://gitlab.freedesktop.org/rncbc/qpwgraph/-/issues</bugs-to>
     <changelog>https://gitlab.freedesktop.org/rncbc/qpwgraph/-/releases</changelog>
     <doc>https://gitlab.freedesktop.org/rncbc/qpwgraph/-/wikis/home</doc>
+    <remote-id type="freedesktop-gitlab">rncbc/qpwgraph</remote-id>
   </upstream>
 </pkgmetadata>
