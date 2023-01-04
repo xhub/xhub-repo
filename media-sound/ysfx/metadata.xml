@@ -12,4 +12,7 @@
   <use>
     <flag name="lto">Enable LTO build</flag>
   </use>
+   <upstream>
+      <remote-id type="github">jpcima/ysfx</remote-id>
+   </upstream>
 </pkgmetadata>
