@@ -33,7 +33,6 @@ DEPEND="
 
 DOCS=( README.md )
 
-
 src_configure() {
 	local mycmakeargs=(
 		-DYSFX_PLUGIN_LTO=$(usex lto 1 0)
