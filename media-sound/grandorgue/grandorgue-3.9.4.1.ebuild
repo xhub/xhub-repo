@@ -22,10 +22,9 @@ DEPEND="
 	media-libs/rtmidi[alsa?,jack?]
 	media-libs/zita-convolver:=
 	media-sound/wavpack
-	sci-libs/fftw
 	sys-libs/zlib
 	virtual/jack
-	x11-libs/wxGTK
+	x11-libs/wxGTK:3.0-gtk3
 	"
 RDEPEND="${DEPEND}"
 BDEPEND="
@@ -34,6 +33,7 @@ BDEPEND="
 	dev-libs/libxslt
 	media-gfx/imagemagick
 	sys-devel/gettext
+	sci-libs/fftw
 	"
 
 src_configure() {
@@ -45,4 +45,11 @@ src_configure() {
 		-DUSE_BUILD_SYSTEM_LIBDIR=1
 	)
 	cmake_src_configure
+}
+
+src_install() {
+	default
+
+	# This silents a warning at startup.
+	keepdir /usr/share/GrandOrgue/packages
 }
