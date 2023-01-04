@@ -48,7 +48,7 @@ src_configure() {
 }
 
 src_install() {
-	default
+	cmake_src_install
 
 	# This silents a warning at startup.
 	keepdir /usr/share/GrandOrgue/packages
