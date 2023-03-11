@@ -12,6 +12,7 @@
    <use>
       <flag name="lv2">build lv2 plugins</flag>
       <flag name="vst">build vst2 plugins</flag>
+      <flag name="xdg">Enable support for XDG-based menus</flag>
    </use>
    <upstream>
       <remote-id type="github">sadko4u/lsp-plugins</remote-id>

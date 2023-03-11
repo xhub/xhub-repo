@@ -1,9 +1,9 @@
-# Copyright 2019-2022 Gentoo Authors
+# Copyright 2019-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-inherit xdg
+inherit toolchain-funcs xdg
 
 DESCRIPTION="Linux Studio Plugins"
 HOMEPAGE="https://lsp-plug.in"
@@ -21,9 +21,10 @@ fi
 
 LICENSE="LGPL-3"
 SLOT="0"
-IUSE="doc jack ladspa +lv2 test vst X"
+IUSE="doc jack ladspa +lv2 test vst xdg"
 REQUIRED_USE="|| ( jack ladspa lv2 )
-	test? ( jack )"
+	test? ( jack )
+	xdg? ( jack )"
 
 RESTRICT="!test? ( test )"
 
@@ -55,16 +56,24 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+src_prepare() {
+	default
+
+	# Allows us to define DOC_SHAREDDIR
+	sed -i -e 's|DOC_SHAREDDIR          :=|DOC_SHAREDDIR          ?=|' modules/lsp-plugin-fw/src/Makefile ||
+		die "sed fix for DOC_SHAREDDIR failed"
+}
+
 src_configure() {
 	use doc && MODULES+="doc"
 	use jack && MODULES+=" jack"
 	use ladspa && MODULES+=" ladspa"
 	use lv2 && MODULES+=" lv2"
 	use vst && MODULES+=" vst2"
-	use X && MODULES+=" xdg"
-	emake FEATURES="${MODULES}" config PREFIX="/usr" LIBDIR="/usr/$(get_libdir)"
+	use xdg && MODULES+=" xdg"
+	emake FEATURES="${MODULES}" config PREFIX="/usr" LIBDIR="/usr/$(get_libdir)" CXX="$(tc-getCXX)"
 }
 
 src_install() {
-	emake PREFIX="/usr" DESTDIR="${ED}" LIB_PATH="/usr/$(get_libdir)" install
+	emake PREFIX="/usr" DESTDIR="${ED}" LIB_PATH="/usr/$(get_libdir)" DOC_SHAREDDIR="${EPREFIX}/share/doc/${P}" install
 }
