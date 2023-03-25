@@ -21,8 +21,8 @@ fi
 
 LICENSE="LGPL-3"
 SLOT="0"
-IUSE="doc jack ladspa +lv2 test vst xdg"
-REQUIRED_USE="|| ( jack ladspa lv2 )
+IUSE="clap doc jack ladspa +lv2 test vst xdg"
+REQUIRED_USE="|| ( clap jack ladspa lv2 )
 	test? ( jack )
 	xdg? ( jack )"
 
@@ -65,7 +65,8 @@ src_prepare() {
 }
 
 src_configure() {
-	use doc && MODULES+="doc"
+	use doc && MODULES+="clap"
+	use doc && MODULES+=" doc"
 	use jack && MODULES+=" jack"
 	use ladspa && MODULES+=" ladspa"
 	use lv2 && MODULES+=" lv2"

@@ -7,7 +7,7 @@ inherit cmake xdg
 
 DESCRIPTION="Qt GUI to control the pipewire and ALSA sequencer connections"
 HOMEPAGE="https://gitlab.freedesktop.org/rncbc/qpwgraph"
-SRC_URI="https://gitlab.freedesktop.org/rncbc/${PN}/-/archive/v${PV}/${PN}-v${PV}.tar.gz"
+SRC_URI="https://gitlab.freedesktop.org/rncbc/${PN}/-/archive/v${PV}/${PN}-v${PV}.tar.bz2"
 S="${WORKDIR}/${PN}-v${PV}"
 
 LICENSE="GPL-2+"

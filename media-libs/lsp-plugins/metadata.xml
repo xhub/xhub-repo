@@ -10,6 +10,7 @@
       currently compatible with LADSPA, LV2 and LinuxVST formats.
    </longdescription>
    <use>
+      <flag name="clap">build CLAP plugins</flag>
       <flag name="lv2">build lv2 plugins</flag>
       <flag name="vst">build vst2 plugins</flag>
       <flag name="xdg">Enable support for XDG-based menus</flag>
