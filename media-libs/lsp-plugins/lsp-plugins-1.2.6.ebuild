@@ -65,7 +65,7 @@ src_prepare() {
 }
 
 src_configure() {
-	use doc && MODULES+="clap"
+	use clap && MODULES+="clap"
 	use doc && MODULES+=" doc"
 	use jack && MODULES+=" jack"
 	use ladspa && MODULES+=" ladspa"
