@@ -16,7 +16,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="alsa demo jack"
 
+# rtmidi should be :=, but does not define slot ...
 DEPEND="
+	dev-cpp/yaml-cpp:=
 	media-libs/portaudio[alsa?,jack?]
 	media-libs/rtaudio:=[alsa?,jack?]
 	media-libs/rtmidi[alsa?,jack?]
