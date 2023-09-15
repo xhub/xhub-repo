@@ -32,7 +32,6 @@ REQUIRED_USE="
 
 # TODO:
 # - virtual/jack depends on a Makefile option
-# - x11-libs/gtk+:3 ???
 RDEPEND="
 	${PYTHON_DEPS}
 	X? (
@@ -43,8 +42,6 @@ RDEPEND="
 		media-libs/libglvnd
 	)
 	alsa? ( media-libs/alsa-lib )
-	gtk2? ( x11-libs/gtk+:2 )
-	gtk? ( x11-libs/gtk+:3 )
 	pulseaudio? ( media-libs/libpulse )
 	qt5? (
 		$(python_gen_cond_dep 'dev-python/PyQt5[gui,svg,widgets,${PYTHON_USEDEP}]')
@@ -61,6 +58,8 @@ RDEPEND="
 
 # TODO: is x11-base/xorg-proto necessary?
 DEPEND="${RDEPEND}
+	gtk2? ( x11-libs/gtk+:2 )
+	gtk? ( x11-libs/gtk+:3 )
 	x11-base/xorg-proto"
 
 PATCHES=( "${FILESDIR}/clang-fno-gnu-unique.patch" )
@@ -77,6 +76,8 @@ src_prepare() {
 		data/carla-rack \
 		data/carla-settings || die "sed failed"
 
+	sed -i -e "s|share/appdata|share/metainfo|g" Makefile || die "sed failed"
+
 	default
 }
 
@@ -86,9 +87,8 @@ src_compile() {
 		HAVE_ALSA=$(usex alsa true false)
 		HAVE_DGL=$(usex opengl true false)
 		HAVE_FLUIDSYNTH=$(usex sf2 true false)
-		HAVE_GTK2=$(usex gtk2 true false)
-		HAVE_GTK3=$(usex gtk true false)
 		HAVE_LIBLO=$(usex osc true false)
+		HAVE_LIBMAGIC=true
 		HAVE_PULSEAUDIO=$(usex pulseaudio true false)
 		HAVE_PYQT=$(usex qt5 true false)
 		HAVE_QT5=$(usex qt5 true false)
