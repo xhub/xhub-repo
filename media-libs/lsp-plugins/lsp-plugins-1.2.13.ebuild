@@ -10,7 +10,6 @@ HOMEPAGE="https://lsp-plug.in"
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
-	SRC_URI=""
 	EGIT_REPO_URI="https://github.com/sadko4u/lsp-plugins"
 	EGIT_BRANCH="devel"
 else
