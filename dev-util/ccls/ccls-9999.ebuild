@@ -7,7 +7,7 @@ EGIT_REPO_URI="https://github.com/MaskRay/${PN}"
 
 if [[ ${PV} = 9999* ]]; then
 	GIT_ECLASS="git-r3"
-	LLVM_COMPAT=( {18..21} )
+	LLVM_COMPAT=( {18..22} )
 else
 	LLVM_COMPAT=( {18..19} )
 fi
