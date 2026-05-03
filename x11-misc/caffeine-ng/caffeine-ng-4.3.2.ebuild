@@ -5,7 +5,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_11 )
+PYTHON_COMPAT=( python3_12 python3_13 python3_14 )
 
 inherit python-single-r1 gnome2-utils meson xdg
 
@@ -29,17 +29,18 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 DEPEND="
 	${PYTHON_DEPS}
 	$(python_gen_cond_dep \
-		'dev-python/pygobject:3[${PYTHON_USEDEP}]
-		 >=dev-python/pyxdg-0.25[${PYTHON_USEDEP}]
+		'dev-python/click[${PYTHON_USEDEP}]
 		 dev-python/dbus-python[${PYTHON_USEDEP}]
 		 >=dev-python/docopt-0.6.2[${PYTHON_USEDEP}]
 		 >=dev-python/ewmh-0.1.4[${PYTHON_USEDEP}]
+	     dev-python/pulsectl[${PYTHON_USEDEP}]
+		 dev-python/pygobject:3[${PYTHON_USEDEP}]
+		 >=dev-python/pyxdg-0.25[${PYTHON_USEDEP}]
 		 >=dev-python/setproctitle-1.1.10[${PYTHON_USEDEP}]
 		 dev-python/setuptools[${PYTHON_USEDEP}]
-		 >=dev-python/wheel-0.29.0[${PYTHON_USEDEP}]
 		 dev-python/setuptools-scm[${PYTHON_USEDEP}]
-	     dev-python/pulsectl[${PYTHON_USEDEP}]
-		 dev-python/click[${PYTHON_USEDEP}]')
+		 >=dev-python/wheel-0.29.0[${PYTHON_USEDEP}]
+		 ')
 	dev-libs/libappindicator:3[introspection]
 	x11-libs/gtk+:3
 	x11-libs/libnotify[introspection]

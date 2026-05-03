@@ -20,7 +20,7 @@ fi
 
 LICENSE="LGPL-3"
 SLOT="0"
-IUSE="clap doc jack ladspa +lv2 test vst xdg"
+IUSE="clap doc gst jack ladspa +lv2 test vst xdg"
 REQUIRED_USE="|| ( clap jack ladspa lv2 )
 	test? ( jack )
 	xdg? ( jack )"
@@ -31,6 +31,9 @@ BDEPEND="doc? ( dev-lang/php:* )"
 DEPEND="
 	media-libs/libglvnd[X]
 	media-libs/libsndfile
+	gst? (
+		media-libs/gstreamer
+	)
 	jack? (
 		media-libs/freetype
 		virtual/jack
@@ -55,25 +58,27 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-src_prepare() {
-	default
-
-	# Allows us to define DOC_SHAREDDIR
-	sed -i -e 's|DOC_SHAREDDIR          :=|DOC_SHAREDDIR          ?=|' modules/lsp-plugin-fw/src/Makefile ||
-		die "sed fix for DOC_SHAREDDIR failed"
-}
-
 src_configure() {
-	use clap && MODULES+="clap"
+	MODULES="ui"
+	use clap && MODULES+=" clap"
 	use doc && MODULES+=" doc"
 	use jack && MODULES+=" jack"
 	use ladspa && MODULES+=" ladspa"
 	use lv2 && MODULES+=" lv2"
 	use vst && MODULES+=" vst2"
 	use xdg && MODULES+=" xdg"
-	emake FEATURES="${MODULES}" config PREFIX="/usr" LIBDIR="/usr/$(get_libdir)" CXX="$(tc-getCXX)"
+	emake config FEATURES="${MODULES}" PREFIX="/usr" LIBDIR="/usr/$(get_libdir)" CXX="$(tc-getCXX)"
 }
 
 src_install() {
-	emake PREFIX="/usr" DESTDIR="${ED}" LIB_PATH="/usr/$(get_libdir)" DOC_SHAREDDIR="${EPREFIX}/share/doc/${P}" install
+	MODULES="ui"
+	use clap && MODULES+=" clap"
+	use doc && MODULES+=" doc"
+	use jack && MODULES+=" jack"
+	use ladspa && MODULES+=" ladspa"
+	use lv2 && MODULES+=" lv2"
+	use vst && MODULES+=" vst2"
+	use xdg && MODULES+=" xdg"
+
+	emake -j1 install FEATURES="${MODULES}" DESTDIR="${ED}" PREFIX="/usr" LIBDIR="/usr/$(get_libdir)" DOC_SHAREDDIR="${EPREFIX}/share/doc/${P}"
 }

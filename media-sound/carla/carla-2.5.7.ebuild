@@ -3,7 +3,7 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10,11} )
+PYTHON_COMPAT=( python3_{12,13,14} )
 inherit python-single-r1 toolchain-funcs xdg
 
 DESCRIPTION="Full featured audio plugin host supporting many audio drivers and plugin formats"
@@ -23,7 +23,7 @@ fi
 
 LICENSE="GPL-2+ LGPL-3"
 SLOT="0"
-IUSE="+X alsa +gtk gtk2 +juce osc +opengl pulseaudio +qt5 rdf +sdl sf2 +sndfile"
+IUSE="+X alsa +gtk gtk2 +juce lto osc +opengl pulseaudio +qt6 rdf +sdl sf2 +sndfile ysfx"
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}
 	juce? ( X )
@@ -43,11 +43,9 @@ RDEPEND="
 	)
 	alsa? ( media-libs/alsa-lib )
 	pulseaudio? ( media-libs/libpulse )
-	qt5? (
-		$(python_gen_cond_dep 'dev-python/PyQt5[gui,svg,widgets,${PYTHON_USEDEP}]')
-		dev-qt/qtcore:5
-		dev-qt/qtgui:5
-		dev-qt/qtwidgets:5
+	qt6? (
+		$(python_gen_cond_dep 'dev-python/pyqt6[gui,svg,widgets,${PYTHON_USEDEP}]')
+		dev-qt/qtbase:6
 	)
 	rdf? ( $(python_gen_cond_dep 'dev-python/rdflib[${PYTHON_USEDEP}]') )
 	sdl? ( media-libs/libsdl2 )
@@ -90,11 +88,13 @@ src_compile() {
 		HAVE_LIBLO=$(usex osc true false)
 		HAVE_LIBMAGIC=true
 		HAVE_PULSEAUDIO=$(usex pulseaudio true false)
-		HAVE_PYQT=$(usex qt5 true false)
-		HAVE_QT5=$(usex qt5 true false)
+		HAVE_PYQT=$(usex qt6 true false)
+		HAVE_QT6=$(usex qt6 true false)
 		HAVE_SDL2=$(usex sdl true false)
 		HAVE_SNDFILE=$(usex sndfile true false)
 		HAVE_X11=$(usex X true false)
+		HAVE_YSFX=$(usex ysfx true false)
+		WITH_LTO=$(usex lto true false)
 		LIBDIR="/usr/$(get_libdir)"
 		SKIP_STRIPPING=true
 		USING_JUCE=$(usex juce true false)

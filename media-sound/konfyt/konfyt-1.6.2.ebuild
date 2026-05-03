@@ -24,7 +24,6 @@ DEPEND="
 	virtual/jack
 "
 RDEPEND="${DEPEND}"
-BDEPEND=""
 
 src_configure() {
 	eqmake5
