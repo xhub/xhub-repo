@@ -42,7 +42,8 @@ src_prepare() {
 	dodir /usr
 
 	# broken configure
-	eapply "${FILESDIR}/${PN}-1.17.10-fedora-configure-amd_defaults-c99.patch"
+	eapply -p2 "${FILESDIR}/fedora-configure-amd_defaults-c99.patch"
+	eapply_user
 
 	mumpslibs="-lmumps_common -ldmumps -lzmumps -lsmumps -lcmumps"
 
