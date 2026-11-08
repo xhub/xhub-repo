@@ -10,18 +10,19 @@ HOMEPAGE="https://lsp-plug.in"
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/sadko4u/lsp-plugins"
+	EGIT_REPO_URI="https://github.com/${PN}/${PN}"
 	EGIT_BRANCH="devel"
 else
-	SRC_URI="https://github.com/sadko4u/${PN}/releases/download/${PV}/${PN}-src-${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/${PN}/${PN}/releases/download/${PV}/${PN}-src-${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~x86"
 	S="${WORKDIR}/${PN}"
 fi
 
 LICENSE="LGPL-3"
 SLOT="0"
-IUSE="clap doc gst jack ladspa +lv2 test vst xdg"
-REQUIRED_USE="|| ( clap jack ladspa lv2 )
+IUSE="clap doc gstreamer jack ladspa launcher +lv2 pipewire standalone test vst xdg"
+REQUIRED_USE="|| ( clap jack ladspa lv2 standalone vst )
+	launcher? ( standalone )
 	test? ( jack )
 	xdg? ( jack )"
 
@@ -31,7 +32,7 @@ BDEPEND="doc? ( dev-lang/php:* )"
 DEPEND="
 	media-libs/libglvnd[X]
 	media-libs/libsndfile
-	gst? (
+	gstreamer? (
 		media-libs/gstreamer
 	)
 	jack? (
@@ -62,11 +63,16 @@ src_configure() {
 	MODULES="ui"
 	use clap && MODULES+=" clap"
 	use doc && MODULES+=" doc"
+	use gstreamer && MODULES+=" gst"
 	use jack && MODULES+=" jack"
 	use ladspa && MODULES+=" ladspa"
+	use launcher && MODULES+=" launcher"
 	use lv2 && MODULES+=" lv2"
-	use vst && MODULES+=" vst2"
+	use pipewire && MODULES+=" pipewire"
+	use standalone && MODULES+=" standalone"
+	use vst && MODULES+=" vst3"
 	use xdg && MODULES+=" xdg"
+
 	emake config FEATURES="${MODULES}" PREFIX="/usr" LIBDIR="/usr/$(get_libdir)" CXX="$(tc-getCXX)"
 }
 
@@ -74,11 +80,16 @@ src_install() {
 	MODULES="ui"
 	use clap && MODULES+=" clap"
 	use doc && MODULES+=" doc"
+	use gstreamer && MODULES+=" gst"
 	use jack && MODULES+=" jack"
 	use ladspa && MODULES+=" ladspa"
+	use launcher && MODULES+=" launcher"
 	use lv2 && MODULES+=" lv2"
-	use vst && MODULES+=" vst2"
+	use pipewire && MODULES+=" pipewire"
+	use standalone && MODULES+=" standalone"
+	use vst && MODULES+=" vst3"
 	use xdg && MODULES+=" xdg"
 
-	emake -j1 install FEATURES="${MODULES}" DESTDIR="${ED}" PREFIX="/usr" LIBDIR="/usr/$(get_libdir)" DOC_SHAREDDIR="${EPREFIX}/share/doc/${P}"
+	emake -j1 install FEATURES="${MODULES}" DESTDIR="${ED}" PREFIX="/usr" LIBDIR="/usr/$(get_libdir)" \
+		DOC_SHAREDDIR="${EPREFIX}/share/doc/${P}"
 }
